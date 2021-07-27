@@ -7,11 +7,12 @@ URL = "URL PARA MAPEAR"
 page = requests.get(URL)
 page_html = soup(page.text, 'lxml')
 
+# ITEM QUE SE REPETE
 product_elements = page_html.find_all("div", class_="ui-search-result__wrapper")
 
 for pages in page_html:
     list_of_products = []
-#scrapper
+#SCRAPPER
     for product_element in product_elements:
         link = product_element.find("a", class_="ui-search-link")
         link_element = link.get('href')
@@ -26,7 +27,7 @@ for pages in page_html:
             'price_product': price_element.text.strip(),
             'link_product': link_element.strip(),
         })
-
+#SALVA EM JSON
 with open("NOME_DO_ARQUIVO.json", "w") as outfile:
     for product in list_of_products:
         json.dump(list_of_products, outfile)
